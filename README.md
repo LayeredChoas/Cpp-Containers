@@ -9,6 +9,12 @@ The multiple available containers in C++ all have a very different usage. To mak
 - Stack
 - Queue
 - Deque
+
+## Usage
+
+```bash
+clang++ -Wall -Werror -Wextra $CONTAINER_NAME/*.cpp ($CONTAINER_NAME)_main.cpp -o  $CONTAINER_NAME
+```
 ## Useful Sources
  - [Container class templates: STL](https://www.cplusplus.com/reference/stl/)
 

@@ -1,0 +1,76 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    tt_aa                                              :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: ayennoui <ayennoui@student.42.fr>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2021/02/15 15:18:11 by ayennoui          #+#    #+#              #
+#    Updated: 2021/02/16 18:43:16 by ayennoui         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+#pragma once
+#include "node.hpp"
+namespace ft
+{
+    template<typename T>
+		class map_iter
+        {
+			private:
+				node<T> *current;
+			public:
+				typedef T                   			value_type;
+				typedef T&								reference;
+				typedef ptrdiff_t						difference_type;
+				typedef map_iter<T>         			iterator;
+				typedef map_iter<const T>   			const_iterator;
+				typedef value_type*						pointer;
+				typedef const value_type*				const_pointer;
+				typedef std::bidirectional_iterator_tag iterator_category;
+				map_iter(node<value_type> *n){current = n;};
+				map_iter(){};
+				iterator& operator++(){ current = current->next; return (*this);}
+				iterator operator++(int) {iterator tmp = *this; ++(*this); return tmp;}
+				iterator& operator--(){ current = current->prev; return (*this);}
+				iterator operator--(int) {iterator tmp = *this; --(*this); return tmp;}
+				iterator& operator=(iterator const &a){ current = a.ptr(); return (*this);}
+				node<value_type> *next_ptr(){return (current->next);}
+				node<value_type> *prev_ptr(){return (current->prev);}
+				node<value_type> *ptr() const {return (current);}
+				value_type* operator->(){return (&current->_value);};
+				template<typename X>
+				friend bool operator==(map_iter const &h, map_iter<X> const &x){return (h.current == x.current);}
+				template<typename X>
+				friend bool operator!=(map_iter const &h, map_iter<X> const &x){return !(h.current == x.current);}
+        };
+    template<typename T>
+		class map_rev_iter
+        {
+			private:
+				node<T> *current;
+			public:
+				typedef T                   			value_type;
+				typedef T&								reference;
+				typedef ptrdiff_t						difference_type;
+				typedef map_rev_iter<T>         			reverse_iterator;
+				typedef map_rev_iter<const T>   			const_reverse_iterator;
+				typedef value_type*						pointer;
+				typedef const value_type*				const_pointer;
+				typedef std::bidirectional_iterator_tag iterator_category;
+				
+				map_rev_iter(node<value_type> *n){current = n;};
+				map_rev_iter(){};
+				reverse_iterator& operator++(){ current = current->prev; return (*this);}
+				reverse_iterator operator++(int) {reverse_iterator tmp = *this; ++(*this); return tmp;}
+				reverse_iterator& operator--(){ current = current->next; return (*this);}
+				reverse_iterator operator--(int) {reverse_iterator tmp = *this; --(*this); return tmp;}
+				reverse_iterator& operator=(reverse_iterator const &a){ current = a.ptr(); return (*this);}
+				node<value_type> *next_ptr(){return (current->next);}
+				node<value_type> *prev_ptr(){return (current->prev);}
+				node<value_type> *ptr() const {return (current);}
+				value_type* operator->(){return (&current->_value);};
+				template<typename X>
+				friend bool operator!=(map_rev_iter &h, map_rev_iter<X> &x){return (1);}
+        };
+}
